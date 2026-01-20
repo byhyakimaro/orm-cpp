@@ -36,7 +36,7 @@ namespace orm {
         return *this;
       }
 
-      void find() {
+      ResultSet find() {
         // Correção: Adicionados espaços nas strings para o SQL não grudar
         std::string table = dialect->quote_identifier(table_name);
         std::string sql = "SELECT * FROM " + table;
@@ -55,6 +55,8 @@ namespace orm {
         // AGORA EXECUTA DE VERDADE:
         std::cout << "Enviando ao Postgres: " << sql << std::endl;
         driver->execute(sql);
+
+        return driver->query(sql);
       }
     };
   }
