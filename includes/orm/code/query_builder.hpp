@@ -17,12 +17,12 @@ namespace orm {
       std::vector<std::string> clauses;
       int limit_val = -1;
 
-      // Usando shared_ptr para evitar erros de conversão e garantir memória segura
+      // Using shared_ptr to manage shared ownership and prevent dangling pointers
       std::shared_ptr<drivers::Driver> driver;
       drivers::Dialect* dialect;
 
     public:
-      // O construtor agora recebe tudo que precisa para construir e executar
+      // Decoupling components by passing all required state via constructor
       QueryBuilder(std::string table, std::shared_ptr<drivers::Driver> drv, drivers::Dialect* dia)
         : table_name(std::move(table)), driver(drv), dialect(dia) {}
 
@@ -37,7 +37,6 @@ namespace orm {
       }
 
       ResultSet find() {
-        // Correção: Adicionados espaços nas strings para o SQL não grudar
         std::string table = dialect->quote_identifier(table_name);
         std::string sql = "SELECT * FROM " + table;
 
@@ -52,7 +51,6 @@ namespace orm {
           sql += " LIMIT " + std::to_string(limit_val);
         }
 
-        // AGORA EXECUTA DE VERDADE:
         std::cout << "Enviando ao Postgres: " << sql << std::endl;
         driver->execute(sql);
 

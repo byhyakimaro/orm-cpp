@@ -7,13 +7,13 @@
 
 namespace orm {
   namespace code {
-    // Uma linha é um mapa de: "Nome da Coluna" -> "Valor"
+    // Map<ColumnName, Value> representation for the row
     using Row = std::map<std::string, std::string>;
 
     struct ResultSet {
       std::vector<Row> rows;
 
-      // Métodos para facilitar o loop for
+      // Helper methods for collection iteration
       auto begin() { return rows.begin(); }
       auto end() { return rows.end(); }
       bool empty() const { return rows.empty(); }

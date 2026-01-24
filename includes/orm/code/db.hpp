@@ -1,5 +1,6 @@
 // includes/orm/code/db.hpp
 #include "query_builder.hpp"
+#include "migrator.hpp"
 
 namespace orm {
   class DB {
@@ -12,8 +13,12 @@ namespace orm {
       : driver(drv), dialect(dia) {}
 
     code::QueryBuilder table(const std::string& name) {
-      // Retorna o Builder com as dependências injetadas
+      // Return the builder instance with resolved dependencies
       return code::QueryBuilder(name, driver, dialect);
+    }
+
+    void auto_migrate(const TableSchema& schema) {
+        Migrator(driver).auto_migrate(schema);
     }
   };
 }

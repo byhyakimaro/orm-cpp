@@ -12,6 +12,7 @@ namespace orm {
       virtual bool connect(const std::string& conn_str) = 0;
       virtual void disconnect() = 0;
       virtual void execute(const std::string& sql) = 0;
+      virtual bool table_exists(const std::string& name) = 0;
       virtual code::ResultSet query(const std::string& sql) = 0;
     };
   }
